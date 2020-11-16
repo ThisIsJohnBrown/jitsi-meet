@@ -213,6 +213,42 @@ export function getParticipants(stateful: Object | Function) {
 }
 
 /**
+ * Toggle a set group of participants.
+ *
+ * @param {(Function|Object|Participant[])} stateful - The redux state
+ * features/base/participants, the (whole) redux state, or redux's.
+ * @param {Object} eventData - Event data
+ * {@code getState} function to be used to retrieve the state
+ * features/base/participants.
+ * @returns {Participant[]}
+ */
+export function toggleParticipants(stateful: Object | Function, eventData: Object) {
+    const { conference } = stateful['features/base/conference'];
+    const participantIds = getParticipants(stateful).map(p => p.id);
+
+    participantIds.forEach(memberId => {
+        if (eventData.visible.indexOf(memberId) > -1 || eventData.visible.length === 0) {
+            $(`#participant_${memberId}`).show();
+        } else {
+            $(`#participant_${memberId}`).hide();
+            conference.muteParticipant(memberId);
+        }
+    });
+
+    const localParticipant = getLocalParticipant(stateful);
+
+    if (eventData.visible.indexOf(localParticipant.id) > -1 || eventData.visible.length === 0) {
+        console.log('not visible');
+        $('#localVideoTileViewContainer').show();
+        $('#new-toolbox').show();
+    } else {
+        console.log('visible!!!');
+        $('#localVideoTileViewContainer').hide();
+        $('#new-toolbox').hide();
+    }
+}
+
+/**
  * Returns the participant which has its pinned state set to truthy.
  *
  * @param {(Function|Object|Participant[])} stateful - The redux state

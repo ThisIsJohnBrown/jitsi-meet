@@ -3,10 +3,12 @@
     position: relative;
     background-size: contain;
     border: $thumbnailVideoBorder solid transparent;
-    border-radius: $borderRadius;
+    // border-radius: $borderRadius;
+    border: solid white 4px;
     margin: 0 $thumbnailVideoMargin;
 
-    &.videoContainerFocused, &:hover {
+    &.videoContainerFocused,
+    &:hover {
         cursor: hand;
     }
 
@@ -16,7 +18,7 @@
     &.videoContainerFocused {
         border: $thumbnailVideoBorder solid $videoThumbnailSelected;
         box-shadow: inset 0 0 3px $videoThumbnailSelected,
-        0 0 3px $videoThumbnailSelected;
+            0 0 3px $videoThumbnailSelected;
     }
 
     .remotevideomenu > .icon-menu {
@@ -30,7 +32,7 @@
         cursor: hand;
         border: $thumbnailVideoBorder solid $videoThumbnailHovered;
         box-shadow: inset 0 0 3px $videoThumbnailHovered,
-        0 0 3px $videoThumbnailHovered;
+            0 0 3px $videoThumbnailHovered;
 
         .remotevideomenu > .icon-menu {
             display: inline-block;

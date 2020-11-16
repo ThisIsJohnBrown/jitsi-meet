@@ -3,9 +3,10 @@
 import EventEmitter from 'events';
 import Logger from 'jitsi-meet-logger';
 
+
 import * as JitsiMeetConferenceEvents from './ConferenceEvents';
 import { openConnection } from './connection';
-import { ENDPOINT_TEXT_MESSAGE_NAME } from './modules/API/constants';
+import { ENDPOINT_TEXT_MESSAGE_NAME, ENDPOINT_TOGGLE_PARTICIPANTS, ENDPOINT_SET_SPEAKER_VIEW } from './modules/API/constants';
 import AuthHandler from './modules/UI/authentication/AuthHandler';
 import UIUtil from './modules/UI/util/UIUtil';
 import mediaDeviceHelper from './modules/devices/mediaDeviceHelper';
@@ -77,6 +78,7 @@ import {
 import {
     dominantSpeakerChanged,
     getLocalParticipant,
+    toggleParticipants,
     getNormalizedDisplayName,
     getParticipantById,
     localParticipantConnectionStatusChanged,
@@ -113,6 +115,9 @@ import {
     maybeOpenFeedbackDialog,
     submitFeedback
 } from './react/features/feedback';
+import {
+    selectParticipantInLargeVideo
+} from './react/features/large-video/actions';
 import { showNotification } from './react/features/notifications';
 import { mediaPermissionPromptVisibilityChanged } from './react/features/overlay';
 import { suspendDetected } from './react/features/power-monitor';
@@ -127,6 +132,7 @@ import { setSharedVideoStatus } from './react/features/shared-video';
 import { AudioMixerEffect } from './react/features/stream-effects/audio-mixer/AudioMixerEffect';
 import { createPresenterEffect } from './react/features/stream-effects/presenter';
 import { endpointMessageReceived } from './react/features/subtitles';
+import { toggleTileView } from './react/features/video-layout';
 import UIEvents from './service/UI/UIEvents';
 import * as RemoteControlEvents
     from './service/remotecontrol/RemoteControlEvents';
@@ -2027,6 +2033,17 @@ export default {
                             },
                             eventData
                         });
+                    } else if (eventData.name === ENDPOINT_TOGGLE_PARTICIPANTS) {
+                        const state = APP.store.getState();
+
+                        toggleParticipants(state, eventData);
+                    } else if (eventData.name === ENDPOINT_SET_SPEAKER_VIEW) {
+                        const state = APP.store.getState();
+
+                        APP.store.dispatch(toggleTileView({
+                            data: eventData.data
+                        }));
+                        APP.store.dispatch(selectParticipantInLargeVideo(eventData.data.speaker));
                     }
                 }
             });
@@ -2850,6 +2867,18 @@ export default {
      */
     sendEndpointMessage(to, payload) {
         room.sendEndpointMessage(to, payload);
+    },
+
+    /**
+     * Toggle the participant being highlighted
+     * @param {string} to the id of the endpoint that should receive the
+     * message. If "" - the message will be sent to all participants.
+     * @param {object} payload the payload of the message.
+     * @throws NetworkError or InvalidStateError or Error if the operation
+     * fails.
+     */
+    toggleParticipant(to, payload) {
+        room.toggleParticipant(to, payload);
     },
 
     /**

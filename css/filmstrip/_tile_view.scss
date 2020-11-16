@@ -7,7 +7,8 @@
      * see.
      */
     .active-speaker {
-        box-shadow: 0 0 5px 3px $videoThumbnailSelected
+        // box-shadow: 0 0 5px 3px $videoThumbnailSelected
+        border: solid red 4px;
     }
 
     #filmstripRemoteVideos {
@@ -23,7 +24,7 @@
     .filmstrip__videos .videocontainer {
         &:not(.active-speaker),
         &:hover:not(.active-speaker) {
-            border: none;
+            // border: none;
             box-shadow: none;
         }
     }
@@ -92,7 +93,7 @@
         justify-content: center;
 
         .videocontainer {
-            border: 0;
+            // border: 0;
             box-sizing: border-box;
             display: block;
             margin: 5px;

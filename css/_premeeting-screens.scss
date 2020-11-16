@@ -1,31 +1,31 @@
 /**
  * Shared style for full screen local track based dialogs/modals.
  */
- .premeeting-screen,
-  .preview-overlay {
-     position: absolute;
-     left: 0;
-     right: 0;
-     top: 0;
-     bottom: 0;
-  }
+.premeeting-screen,
+.preview-overlay {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+}
 
- .premeeting-screen {
+.premeeting-screen {
     align-items: stretch;
-    background: radial-gradient(50% 50% at 50% 50%, #2A3A4B 20.83%, #1E2A36 100%);
+    background: black;
     display: flex;
     flex-direction: column;
     font-size: 1.3em;
     z-index: $toolbarZ + 1;
 
     &-avatar {
-        background-color: #A4B8D1;
+        background-color: #a4b8d1;
         margin-bottom: 24px;
 
         text {
             fill: black;
             font-size: 26px;
-            font-weight: 400;  
+            font-weight: 400;
         }
     }
 
@@ -43,13 +43,13 @@
         width: 286px;
 
         &.primary {
-            background: #0376DA;
-            border: 1px solid #0376DA;
+            background: #0376da;
+            border: 1px solid #0376da;
         }
 
         &.secondary {
             background: transparent;
-            border: 1px solid #5E6D7A;
+            border: 1px solid #5e6d7a;
         }
 
         &.text {
@@ -60,14 +60,14 @@
         }
 
         &.disabled {
-            background: #5E6D7A;
-            border: 1px solid #5E6D7A;
-            color: #AFB6BC;
+            background: #5e6d7a;
+            border: 1px solid #5e6d7a;
+            color: #afb6bc;
             cursor: initial;
 
             .icon {
                 & > svg {
-                    fill: #AFB6BC;
+                    fill: #afb6bc;
                 }
             }
         }
@@ -84,7 +84,7 @@
             width: 36px;
 
             &:hover {
-                background-color: #0262B6;
+                background-color: #0262b6;
             }
 
             svg {
@@ -134,11 +134,11 @@
                 transition: background 0.16s ease-out;
 
                 &:hover {
-                    background: #1C2025;
+                    background: #1c2025;
                 }
 
                 &.done {
-                    background: #31B76A;
+                    background: #31b76a;
                 }
 
                 .jitsi-icon {
@@ -173,7 +173,7 @@
             border-radius: 3px;
             font-size: 15px;
             line-height: 24px;
-            color: #1C2025;
+            color: #1c2025;
             padding: 8px 0;
             text-align: center;
             width: 320px;
@@ -183,7 +183,7 @@
             }
 
             &.focused {
-                box-shadow: 0px 0px 4px 3px #0376DA;
+                box-shadow: 0px 0px 4px 3px #0376da;
             }
         }
     }
@@ -194,7 +194,7 @@
         margin: 24px 0 16px 0;
         width: 100%;
 
-        &> div {
+        & > div {
             margin: 0 12px;
         }
 
@@ -214,12 +214,17 @@
     width: 100%;
 
     &.no-video {
-        background: radial-gradient(50% 50% at 50% 50%, #5B6F80 0%, #365067 100%), #FFFFFF;
+        background: radial-gradient(
+                50% 50% at 50% 50%,
+                #5b6f80 0%,
+                #365067 100%
+            ),
+            #ffffff;
         text-align: center;
     }
 
     .avatar {
-        background: #A4B8D1;
+        background: #a4b8d1;
         margin: 0 auto;
     }
 
@@ -242,7 +247,7 @@
         background: $bg;
 
         svg {
-            fill: $fill
+            fill: $fill;
         }
     }
 }
@@ -266,7 +271,7 @@
     &:hover {
         background: rgba(255, 255, 255, 0.1);
 
-        @include icon-container(#A4B8D1, #1C2025);
+        @include icon-container(#a4b8d1, #1c2025);
     }
 
     &-container {
@@ -283,6 +288,6 @@
     }
 
     &--toggled {
-        @include icon-container(white, #1C2025);
+        @include icon-container(white, #1c2025);
     }
 }

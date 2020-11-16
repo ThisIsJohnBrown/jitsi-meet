@@ -15,3 +15,7 @@ export const API_ID = parseURLParams(window.location).jitsi_meet_external_api_id
  * The payload name for the datachannel/endpoint text message event
  */
 export const ENDPOINT_TEXT_MESSAGE_NAME = 'endpoint-text-message';
+
+export const ENDPOINT_TOGGLE_PARTICIPANTS = 'endpoint-toggle-participants';
+
+export const ENDPOINT_SET_SPEAKER_VIEW = 'endpoint-set-speaker-view';

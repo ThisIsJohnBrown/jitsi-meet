@@ -14,7 +14,7 @@ import {
 } from '../../react/features/base/conference';
 import { parseJWTFromURLParams } from '../../react/features/base/jwt';
 import JitsiMeetJS, { JitsiRecordingConstants } from '../../react/features/base/lib-jitsi-meet';
-import { pinParticipant } from '../../react/features/base/participants';
+import { pinParticipant, getParticipants, toggleParticipants, setSpeakerView } from '../../react/features/base/participants';
 import {
     processExternalDeviceRequest
 } from '../../react/features/device-selection/functions';
@@ -34,7 +34,8 @@ import { toggleTileView } from '../../react/features/video-layout';
 import { setVideoQuality } from '../../react/features/video-quality';
 import { getJitsiMeetTransport } from '../transport';
 
-import { API_ID, ENDPOINT_TEXT_MESSAGE_NAME } from './constants';
+
+import { API_ID, ENDPOINT_TEXT_MESSAGE_NAME, ENDPOINT_TOGGLE_PARTICIPANTS, ENDPOINT_SET_SPEAKER_VIEW } from './constants';
 
 const logger = Logger.getLogger(__filename);
 
@@ -201,6 +202,47 @@ function initCommands() {
                 });
             } catch (err) {
                 logger.error('Failed sending endpoint text message', err);
+            }
+        },
+        'toggle-participant': dataString => {
+            logger.debug('Toggle participant command received');
+            const data = JSON.parse(dataString);
+
+            const state = APP.store.getState();
+
+            toggleParticipants(state, data);
+            try {
+                data.ids.forEach(id => {
+                    APP.conference.sendEndpointMessage(id, {
+                        name: ENDPOINT_TOGGLE_PARTICIPANTS,
+                        visible: data.visible
+                    });
+                });
+            } catch (err) {
+                logger.error('Failed sending endpoint text messages to all participants', err);
+            }
+        },
+        'set-speaker-view': dataString => {
+            console.log('--------------');
+            const data = JSON.parse(dataString);
+            const state = APP.store.getState();
+
+            APP.store.dispatch(toggleTileView({
+                data
+            }));
+            APP.store.dispatch(selectParticipantInLargeVideo(data.speaker));
+
+            const participants = getParticipants(state).filter(p => !p.local);
+
+            try {
+                participants.forEach(participant => {
+                    APP.conference.sendEndpointMessage(participant.id, {
+                        name: ENDPOINT_SET_SPEAKER_VIEW,
+                        data
+                    });
+                });
+            } catch (err) {
+                logger.error('Failed sending endpoint text messages to all participants', err);
             }
         },
         'toggle-e2ee': enabled => {

@@ -37,6 +37,8 @@ const commands = {
     muteEveryone: 'mute-everyone',
     password: 'password',
     pinParticipant: 'pin-participant',
+    toggleParticipant: 'toggle-participant',
+    setSpeakerView: 'set-speaker-view',
     resizeLargeVideo: 'resize-large-video',
     sendEndpointTextMessage: 'send-endpoint-text-message',
     sendTones: 'send-tones',

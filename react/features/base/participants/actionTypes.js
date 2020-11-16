@@ -137,6 +137,18 @@ export const PARTICIPANT_UPDATED = 'PARTICIPANT_UPDATED';
 export const PIN_PARTICIPANT = 'PIN_PARTICIPANT';
 
 /**
+ * The type of the Redux action which toggles a conference participant.
+ *
+ * {
+ *     type: TOGGLE_PARTICIPANT,
+ *     participant: {
+ *         id: string
+ *     }
+ * }
+ */
+export const TOGGLE_PARTICIPANT = 'TOGGLE_PARTICIPANT';
+
+/**
  * Action to signal that a hidden participant has joined.
  *
  * {

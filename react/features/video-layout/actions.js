@@ -47,12 +47,18 @@ export function setTileView(enabled: ?boolean) {
  * Creates a (redux) action which signals either to exit tile view if currently
  * enabled or enter tile view if currently disabled.
  *
+ * @param {Object} override - Whether or not tile view should be shown.
  * @returns {Function}
  */
-export function toggleTileView() {
+export function toggleTileView(override: Object) {
     return (dispatch: Dispatch<any>, getState: Function) => {
-        const tileViewActive = shouldDisplayTileView(getState());
+        if (override) {
+            dispatch(setTileView(override.data.enabled));
+        } else {
+            const tileViewActive = shouldDisplayTileView(getState());
 
-        dispatch(setTileView(!tileViewActive));
+            dispatch(setTileView(!tileViewActive));
+
+        }
     };
 }
